@@ -134,42 +134,61 @@ namespace Performance_Employee
                 }
                 
             }
-
+            Console.WriteLine("\t");
             Console.WriteLine("5 Employees with the lowest efficiency");
             Console.WriteLine("---------------------------------------");
-            List<ExcelData> ExcelDataFinal = new List<ExcelData>();
-            ExcelDataFinal = lstexcelDatas.OrderByDescending(x => x.Hours).ToList();
+         
 
             List<string> Owner = lstexcelDatas.Select(x => x.Owner).Distinct().ToList();
             float hrs = 0;
             List<EmpEff> empEffsLst = new List<EmpEff>();
             for (int z=0;z<Owner.Count;z++)
             {
-                EmpEff empEff = new EmpEff();
-                List<string> OwnerHours = lstexcelDatas.Where(x => x.Owner == Owner[z]).Select(x => x.Hours).ToList();
-                for (int d = 0; d< OwnerHours.Count;d++)
+                
+                if (Convert.ToString(Owner[z])!= null)
                 {
-                    if (hrs == 0)
+                    List<string> OwnerHours = lstexcelDatas.Where(x => x.Owner == Owner[z]).Select(x => x.Hours).ToList();
+                   
+                    EmpEff empEff = new EmpEff();
+                    int cntHrs = Convert.ToInt32(OwnerHours.Count);
+                    if (cntHrs >= 0)
                     {
-                        hrs = float.Parse(OwnerHours[z]);
+                        for (int d = 0; d < cntHrs; d++)
+                        {
+                           
+                            
+                                if (hrs == 0)
+                                {
+                                    hrs = float.Parse(Convert.ToString(OwnerHours[d]));
+                                }
+                                else
+                                {
+                                    hrs = hrs + float.Parse(Convert.ToString(OwnerHours[d]));
+                                }
+                            
+
+                        }
                     }
-                    else
-                    {
-                        hrs = hrs + float.Parse(OwnerHours[z]);
-                    }
+
+
+                    empEff.Hours = hrs;
+                    empEff.Owner = Owner[z];
+
+                    empEffsLst.Add(empEff);
                 }
 
-                empEff.Hours = hrs;
-                empEff.Owner = Owner[z];
-
-                empEffsLst.Add(empEff);
             }
             //To print 5 employee efficient
-
-            for (int q = 0;q< empEffsLst.Count;q++)
+            List<EmpEff> LstempEff = new List<EmpEff>();
+            LstempEff = empEffsLst.OrderBy(x => x.Hours).ToList();
+            Console.WriteLine("---------------------------------------");
+            for (int q = 0; q < 5; q++)
             {
-
+                Console.WriteLine("Employee Name =   " + "  " + LstempEff[q].Owner);
+                Console.WriteLine("Hours         =   " + "  " + LstempEff[q].Hours);
+                Console.WriteLine("------------------------------------------------");
             }
+            Console.WriteLine("end");
         }
     }
 }
