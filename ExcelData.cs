@@ -15,7 +15,7 @@ namespace Performance_Employee
         //public string  Owner { get; set; }
         //public string Team { get; set; }
         //public string Status { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
        
         public string ProjectName { get; set; }
@@ -25,5 +25,10 @@ namespace Performance_Employee
 
        
         public string BillingStatus { get; set; }
+    }
+
+    public class EmpEff {
+        public float Hours { get; set; }
+        public string Owner { get; set; }
     }
 }
